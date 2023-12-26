@@ -51,13 +51,13 @@ class ConsoleParserTest extends FunSuite {
   test("getImageExporters should return StdoutImageExporter for output-console command") {
     val parser = new ConsoleParser(List("--output-console"))
     val expected = Right(List(StdoutImageExporter()))
-    assert(parser.getImageExporters() == expected)
+    assert(parser.getAsciiImageExporters() == expected)
   }
 
   test("getImageExporters should return TxtImageExporter for valid TXT file path") {
     val parser = new ConsoleParser(List("--output-file", "test.txt"))
     val expected = Right(List(TxtImageExporter("test.txt")))
-    assert(parser.getImageExporters() == expected)
+    assert(parser.getAsciiImageExporters() == expected)
   }
 
   test("ConsoleParser should return Unsupported image format error when image path is not JPG or PNG file") {
@@ -72,7 +72,7 @@ class ConsoleParserTest extends FunSuite {
 
   test("ConsoleParser should return Unsupported image format error when output file path is not TXT file") {
     val consoleParser = new ConsoleParser(List("--output-file", "test.doc"))
-    assert(consoleParser.getImageExporters() == Left("Unsupported output file format. Please use TXT file."))
+    assert(consoleParser.getAsciiImageExporters() == Left("Unsupported output file format. Please use TXT file."))
   }
 
   test("ConsoleParser should return Invalid argument for rotate error when rotate filter argument is not valid number") {

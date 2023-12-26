@@ -1,7 +1,7 @@
 package asciiart.ui
 
 import asciiart.controllers.Controller
-import asciiart.image.convertors.image.{GrayscaleToAsciiImageConvertor, ImageConvertor}
+import asciiart.image.convertors.image.{GrayscaleToAsciiImageConverter, ImageConverter}
 import asciiart.image.exporters.{FileSystemImageExporter, ImageExporter, StdoutImageExporter}
 import asciiart.image.filters.ImageFilter
 import asciiart.image.filters.invert.InvertImageFilter
@@ -28,7 +28,7 @@ class ConsoleViewTest extends FunSuite {
     val mockController = mock[Controller[RGBImage, AsciiImage]]
     when(mockController.importImage(any[ImageImporter[RGBImage]])).thenReturn(Some(rgbImage))
     when(mockController.applyFilter(any[RGBImage], any[InvertImageFilter])).thenReturn(Some(rgbImage))
-    when(mockController.applyConvertor(any[RGBImage], any[ImageConvertor[RGBImage, AsciiImage]])).thenReturn(Some(AsciiImage(asciiPixelGrid)))
+    when(mockController.applyConvertor(any[RGBImage], any[ImageConverter[RGBImage, AsciiImage]])).thenReturn(Some(AsciiImage(asciiPixelGrid)))
     doNothing().when(mockController).exportImage(any[AsciiImage], any[ImageExporter[AsciiImage]])
     doNothing().when(mockController).showErrorMessage(anyString())
     doNothing().when(mockController).showHelp()
@@ -54,7 +54,7 @@ class ConsoleViewTest extends FunSuite {
     val mockController = mock[Controller[RGBImage, AsciiImage]]
     when(mockController.importImage(any[ImageImporter[RGBImage]])).thenReturn(Some(rgbImage))
     when(mockController.applyFilter(any[RGBImage], any[InvertImageFilter])).thenReturn(Some(rgbImage))
-    when(mockController.applyConvertor(any[RGBImage], any[ImageConvertor[RGBImage, AsciiImage]])).thenReturn(Some(AsciiImage(asciiPixelGrid)))
+    when(mockController.applyConvertor(any[RGBImage], any[ImageConverter[RGBImage, AsciiImage]])).thenReturn(Some(AsciiImage(asciiPixelGrid)))
     doNothing().when(mockController).exportImage(any[AsciiImage], any[ImageExporter[AsciiImage]])
     doNothing().when(mockController).showErrorMessage(anyString())
     doNothing().when(mockController).showHelp()

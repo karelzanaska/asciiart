@@ -1,6 +1,6 @@
 package asciiart.controllers
 
-import asciiart.image.convertors.image.ImageConvertor
+import asciiart.image.convertors.image.ImageConverter
 import asciiart.image.exporters.ImageExporter
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
@@ -45,7 +45,7 @@ class ConsoleController() extends Controller[RGBImage, AsciiImage] {
     }
   }
 
-  override def applyConvertor(image: RGBImage, imageConvertor: ImageConvertor[RGBImage, AsciiImage]): Option[AsciiImage] = {
+  override def applyConvertor(image: RGBImage, imageConvertor: ImageConverter[RGBImage, AsciiImage]): Option[AsciiImage] = {
     imageConvertor.convert(image).fold(
         message => {
             showErrorMessage(message)

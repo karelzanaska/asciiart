@@ -1,8 +1,8 @@
 package asciiart.ui
 
-import asciiart.image.convertors.image.{GrayscaleToAsciiImageConvertor, ImageConvertor}
+import asciiart.image.convertors.image.{GrayscaleToAsciiImageConverter, ImageConverter, PatternBasedAsciiImageConverter}
 import asciiart.image.convertors.pixel.{LinearGrayscaleToAsciiPixelConvertor, NonLinearGrayscaleToAsciiPixelConvertor, PaulBourkeGrayscaleToAsciiPixelConvertor}
-import asciiart.image.exporters.{ImageExporter, StdoutImageExporter, TxtImageExporter}
+import asciiart.image.exporters.{BMPImageExporter, GIFImageExporter, ImageExporter, JPGImageExporter, PNGImageExporter, StdoutImageExporter, TxtImageExporter}
 import asciiart.image.filters.ImageFilter
 import asciiart.image.filters.flip.FlipImageFilter
 import asciiart.image.filters.invert.InvertImageFilter
@@ -11,6 +11,7 @@ import asciiart.image.filters.scale.ScaleImageFilter
 import asciiart.image.importers.{FileSystemImageImporter, ImageImporter, RandomImageGeneratorImporter}
 import asciiart.image.models.image.{AsciiImage, RGBImage}
 
+import scala.Right
 import scala.collection.mutable.ListBuffer
 
 class ConsoleParser(private val args: List[String]) {
@@ -53,18 +54,23 @@ class ConsoleParser(private val args: List[String]) {
       command =>
         command._1 match {
           case "image" =>
-            val imagePath = command._2.get
-            imagePath match {
-              case path if path.endsWith(".jpg") => Right(FileSystemImageImporter(path))
-              case path if path.endsWith(".png") => Right(FileSystemImageImporter(path))
-              case _ => Left("Unsupported image format. Please use JPG or PNG file.")
+            command._2 match {
+              case Some(path) if path.endsWith(".jpg") => Right(FileSystemImageImporter(path))
+              case Some(path) if path.endsWith(".png") => Right(FileSystemImageImporter(path))
+              case Some(path) if path.endsWith(".gif") => Right(FileSystemImageImporter(path))
+              case Some(path) if path.endsWith(".bmp") => Right(FileSystemImageImporter(path))
+              case Some(_) => Left("Unsupported image format. Please use JPG or PNG or GIF or BMP file.")
+              case None => Left("No image path specified.")
             }
           case "image-random" => Right(RandomImageGeneratorImporter())
+          case "image-random-gradient" => Right(RandomImageGeneratorImporter())
+          case _ => Left("Invalid image command.")
         }
     )
   }
 
-  def getImageExporters(): Either[String, List[ImageExporter[AsciiImage]]] = {
+  def getAsciiImageExporters(): Either[String, List[ImageExporter[AsciiImage]]] = {
+//    val imageExporters = new ListBuffer[ImageExporter[AsciiImage]]()
     val imageExporters = new ListBuffer[ImageExporter[AsciiImage]]()
 
     val outputConsole = parsedArgs.find(_._1 == "output-console")
@@ -75,9 +81,62 @@ class ConsoleParser(private val args: List[String]) {
     val outputFile = parsedArgs.find(_._1 == "output-file")
     if (outputFile.isDefined) {
       val path = outputFile.get._2.get
-      if (path.endsWith(".txt")) imageExporters += TxtImageExporter(path)
-      else return Left("Unsupported output file format. Please use TXT file.")
+      if (path.endsWith(".txt")) {
+        imageExporters += TxtImageExporter(path)
+      }
+      else {
+        return Left("Unsupported output file format. Please use TXT file.")
+      }
     }
+
+    Right(imageExporters.toList)
+  }
+
+  def getRGBImageExporters(): Either[String, List[ImageExporter[RGBImage]]] = {
+    val imageExporters = new ListBuffer[ImageExporter[RGBImage]]()
+
+    parsedArgs.foreach(arg => {
+      arg._1 match {
+        case "output-rgb-file" =>
+          val path = arg._2.get
+          if (path.endsWith(".jpg")) {
+            imageExporters += JPGImageExporter(path)
+          }
+          else if (path.endsWith(".png")) {
+            imageExporters += PNGImageExporter(path)
+          }
+          else if (path.endsWith(".gif")) {
+            imageExporters += GIFImageExporter(path)
+          }
+          else if (path.endsWith(".bmp")) {
+            imageExporters += BMPImageExporter(path)
+          }
+          else {
+            return Left("Unsupported output file format. Please use JPG or PNG or GIF or BMP file.")
+          }
+        case _ => Left("Invalid rgb image command.")
+      }
+    })
+
+//    val outputFile = parsedArgs.find(_._1 == "output-rgb-file")
+//    if (outputFile.isDefined) {
+//      val path = outputFile.get._2.get
+//      if (path.endsWith(".jpg")) {
+//        imageExporters += JPGImageExporter(path)
+//      }
+//      else if (path.endsWith(".png")) {
+//        imageExporters += PNGImageExporter(path)
+//      }
+//      else if (path.endsWith(".gif")) {
+//        imageExporters += GIFImageExporter(path)
+//      }
+//      else if (path.endsWith(".bmp")) {
+//        imageExporters += BMPImageExporter(path)
+//      }
+//      else {
+//        return Left("Unsupported output file format. Please use JPG or PNG or GIF or BMP file.")
+//      }
+//    }
 
     Right(imageExporters.toList)
   }
@@ -108,12 +167,13 @@ class ConsoleParser(private val args: List[String]) {
     Right(filters.toList)
   }
 
-  def getAsciiImageConvertor(): Either[String, ImageConvertor[RGBImage, AsciiImage]] = {
+  def getAsciiImageConvertor(): Either[String, ImageConverter[RGBImage, AsciiImage]] = {
     val tableConvertor = parsedArgs.find(_._1 == "table")
     if (tableConvertor.isDefined) {
-      val convertor = tableConvertor.get._2.get match {
-        case "paulbourke" => Right(GrayscaleToAsciiImageConvertor(new PaulBourkeGrayscaleToAsciiPixelConvertor))
-        case "nonlinear" => Right(GrayscaleToAsciiImageConvertor(new NonLinearGrayscaleToAsciiPixelConvertor))
+      val convertor: Either[String, ImageConverter[RGBImage, AsciiImage]] = tableConvertor.get._2.get match {
+        case "paulbourke" => Right(GrayscaleToAsciiImageConverter(new PaulBourkeGrayscaleToAsciiPixelConvertor))
+        case "nonlinear" => Right(GrayscaleToAsciiImageConverter(new NonLinearGrayscaleToAsciiPixelConvertor))
+        case "patternbased" => Right(PatternBasedAsciiImageConverter())
         case _ => Left("Invalid argument for table. Please use paulbourke or nonlinear.")
       }
       return convertor
@@ -123,7 +183,7 @@ class ConsoleParser(private val args: List[String]) {
     if (manuallySetConvertor.isDefined) {
       val convertor = manuallySetConvertor.get._2 match {
         case Some(value) =>
-          val convertor = GrayscaleToAsciiImageConvertor(new LinearGrayscaleToAsciiPixelConvertor(value))
+          val convertor = GrayscaleToAsciiImageConverter(new LinearGrayscaleToAsciiPixelConvertor(value))
           Right(convertor)
         case None => Left("Invalid argument for custom-table.")
       }
@@ -131,7 +191,7 @@ class ConsoleParser(private val args: List[String]) {
     }
 
     // no table specified, use default
-    Right(GrayscaleToAsciiImageConvertor(new PaulBourkeGrayscaleToAsciiPixelConvertor))
+    Right(GrayscaleToAsciiImageConverter(new PaulBourkeGrayscaleToAsciiPixelConvertor))
   }
 
   private def parseRotateFilter(degrees: String): Either[String, Int] = {
@@ -158,7 +218,7 @@ class ConsoleParser(private val args: List[String]) {
   }
 
   private def parseImageCommand(): Either[String, (String, Option[String])] = {
-    val imageCommands: Seq[(String, Option[String])] = parsedArgs.filter(arg => arg._1 == "image" || arg._1 == "image-random")
+    val imageCommands: Seq[(String, Option[String])] = parsedArgs.filter(arg => arg._1 == "image" || arg._1 == "image-random" || arg._1 == "image-random-gradient")
 
     if (imageCommands.isEmpty) Left("No image command specified")
     else if (imageCommands.length > 1) Left("Multiple image commands specified. Please specify only one image command.")

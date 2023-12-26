@@ -1,6 +1,6 @@
 package asciiart.controllers
 
-import asciiart.image.convertors.image.ImageConvertor
+import asciiart.image.convertors.image.ImageConverter
 import asciiart.image.exporters.ImageExporter
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
@@ -63,6 +63,6 @@ trait Controller[A <: Image, B <: Image] {
    * @param convertor to use for conversion
    * @return Option containing the converted image if successful, None otherwise
    */
-  def applyConvertor(image: A, imageConvertor: ImageConvertor[A, B]): Option[B]
+  def applyConvertor(image: A, imageConvertor: ImageConverter[A, B]): Option[B]
 
 }

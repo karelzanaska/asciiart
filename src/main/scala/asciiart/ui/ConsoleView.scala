@@ -1,7 +1,7 @@
 package asciiart.ui
 
 import asciiart.controllers.Controller
-import asciiart.image.convertors.image.ImageConvertor
+import asciiart.image.convertors.image.ImageConverter
 import asciiart.image.exporters.ImageExporter
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
@@ -29,11 +29,12 @@ class ConsoleView(val controller: Controller[RGBImage, AsciiImage], args: List[S
     }
 
     val imageImporter: Option[ImageImporter[RGBImage]] = validateEither(consoleParser.getImageImporter())
-    val asciiImageConvertor: Option[ImageConvertor[RGBImage, AsciiImage]] = validateEither(consoleParser.getAsciiImageConvertor())
-    val imageExporters: Option[List[ImageExporter[AsciiImage]]] = validateEither(consoleParser.getImageExporters())
+    val asciiImageConvertor: Option[ImageConverter[RGBImage, AsciiImage]] = validateEither(consoleParser.getAsciiImageConvertor())
+    val imageRGBExporters: Option[List[ImageExporter[RGBImage]]] = validateEither(consoleParser.getRGBImageExporters())
+    val imageAsciiExporters: Option[List[ImageExporter[AsciiImage]]] = validateEither(consoleParser.getAsciiImageExporters())
     val imageFilters: Option[List[ImageFilter[RGBImage]]] = validateEither(consoleParser.getImageFilters())
 
-    (imageImporter, asciiImageConvertor, imageExporters) match {
+    (imageImporter, asciiImageConvertor, imageAsciiExporters) match {
       case (Some(image), Some(convertor), Some(exporters)) =>
         val imageImporter = controller.importImage(image)
 
@@ -42,6 +43,9 @@ class ConsoleView(val controller: Controller[RGBImage, AsciiImage], args: List[S
         val filteredImage = imageFilters.getOrElse(Nil).foldLeft(rgbImage)((acc, filter) => controller.applyFilter(acc.getOrElse(return ), filter)).getOrElse(return )
 
         val asciiImage = controller.applyConvertor(filteredImage, convertor)
+        imageRGBExporters.getOrElse(Nil).foreach(exporter => {
+          exporter.exportImage(filteredImage)
+        })
         val exportedAsciiImage = asciiImage.getOrElse(return)
 
         exporters.foreach(exporter => {

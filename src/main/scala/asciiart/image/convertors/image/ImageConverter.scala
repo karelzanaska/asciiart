@@ -7,7 +7,7 @@ import asciiart.image.models.image.{AsciiImage, Image, RGBImage}
  * @tparam A class must be subclass of Image. This is the input image.
  * @tparam B class must be subclass of Image. This is the output image.
  */
-trait ImageConvertor[A <: Image, B <: Image] {
+trait ImageConverter[A <: Image, B <: Image] {
 
   /**
    * Converts an image

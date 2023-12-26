@@ -6,13 +6,13 @@ import asciiart.image.models.image.{AsciiImage, RGBImage}
 import asciiart.image.models.pixel.{AsciiPixel, RGBPixel}
 import org.scalatest.FunSuite
 
-class GrayscaleToAsciiImageConvertorTest extends FunSuite {
+class GrayscaleToAsciiImageConverterTest extends FunSuite {
 
   test("convert should correctly convert RGBImage to AsciiImage when input is valid") {
     val pixelConvertor = new PixelConvertor[RGBPixel, AsciiPixel] {
       override def convert(pixel: RGBPixel): Either[String, AsciiPixel] = Right(AsciiPixel('a'))
     }
-    val imageConvertor = GrayscaleToAsciiImageConvertor(pixelConvertor)
+    val imageConvertor = GrayscaleToAsciiImageConverter(pixelConvertor)
     val rgbPixelGrid = PixelGrid[RGBPixel](1, 1)
     val image = RGBImage(rgbPixelGrid)
 
@@ -27,7 +27,7 @@ class GrayscaleToAsciiImageConvertorTest extends FunSuite {
     val pixelConvertor = new PixelConvertor[RGBPixel, AsciiPixel] {
       override def convert(pixel: RGBPixel): Either[String, AsciiPixel] = Left("Some error occurred")
     }
-    val imageConvertor = GrayscaleToAsciiImageConvertor(pixelConvertor)
+    val imageConvertor = GrayscaleToAsciiImageConverter(pixelConvertor)
     val rgbPixelGrid = PixelGrid[RGBPixel](1, 1)
     val image = RGBImage(rgbPixelGrid)
 

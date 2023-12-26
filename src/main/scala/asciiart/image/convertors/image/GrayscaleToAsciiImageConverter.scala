@@ -5,7 +5,7 @@ import asciiart.image.models.grid.PixelGrid
 import asciiart.image.models.image.{AsciiImage, RGBImage}
 import asciiart.image.models.pixel.{AsciiPixel, RGBPixel}
 
-case class GrayscaleToAsciiImageConvertor(pixelConvertor: PixelConvertor[RGBPixel, AsciiPixel]) extends ImageConvertor[RGBImage, AsciiImage] {
+case class GrayscaleToAsciiImageConverter(pixelConvertor: PixelConvertor[RGBPixel, AsciiPixel]) extends ImageConverter[RGBImage, AsciiImage] {
 
   /**
    * Converts an RGB image to ASCII
