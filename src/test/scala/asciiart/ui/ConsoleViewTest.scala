@@ -59,12 +59,12 @@ class ConsoleViewTest extends FunSuite {
     doNothing().when(mockController).showErrorMessage(anyString())
     doNothing().when(mockController).showHelp()
 
-    val args = List("--image", "samples/cloud.gif", "--output-console", "--output-file", "output.txt", "--invert", "--table", "whatevertable")
+    val args = List("--image", "samples/cloud.glf", "--output-console", "--output-file", "output.txt", "--invert", "--table", "whatevertable")
 
     val consoleView = new ConsoleView(mockController, args)
 
     consoleView.run()
 
-    verify(consoleView.controller, times(1)).showErrorMessage("Unsupported image format. Please use JPG or PNG file.")
+    verify(consoleView.controller, times(1)).showErrorMessage("Unsupported image format. Please use JPG or PNG or GIF or BMP file.")
   }
 }

@@ -43,8 +43,8 @@ class ConsoleParserTest extends FunSuite {
   }
 
   test("getImageImporter should return Unsupported image format error for unsupported image format") {
-    val parser = new ConsoleParser(List("--image", "test.bmp"))
-    val expected = Left("Unsupported image format. Please use JPG or PNG file.")
+    val parser = new ConsoleParser(List("--image", "test.bxp"))
+    val expected = Left("Unsupported image format. Please use JPG or PNG or GIF or BMP file.")
     assert(parser.getImageImporter() == expected)
   }
 
@@ -61,8 +61,8 @@ class ConsoleParserTest extends FunSuite {
   }
 
   test("ConsoleParser should return Unsupported image format error when image path is not JPG or PNG file") {
-    val consoleParser = new ConsoleParser(List("--image", "test.gif"))
-    assert(consoleParser.getImageImporter() == Left("Unsupported image format. Please use JPG or PNG file."))
+    val consoleParser = new ConsoleParser(List("--image", "test.glf"))
+    assert(consoleParser.getImageImporter() == Left("Unsupported image format. Please use JPG or PNG or GIF or BMP file."))
   }
 
   test("ConsoleParser should return Multiple image commands specified error when multiple image commands are specified") {
