@@ -10,13 +10,16 @@ import java.io.File
 import javax.imageio.ImageIO
 
 
-case class FileSystemImageImporter(val path: String) extends ImageImporter[RGBImage] {
+class FileSystemImageImporter(val path: String, val importFormat: String) extends ImageImporter[RGBImage] {
   /**
    * Imports an image from a file
    *  @return
    */
   override def importImage: Either[String, RGBImage] = {
     try {
+      if (importFormat != "png" && importFormat != "jpg" && importFormat != "bmp" && importFormat != "gif") {
+        return Left("Unsupported image format: '" + importFormat + "'")
+      }
       val image = ImageIO.read(new File(path))
       if (image == null) {
         return Left("Unable to load image with provided path: '" + path + "'")

@@ -53,12 +53,3 @@ class RGBImageExporter(val filePath: String, val exportFormat: String) extends I
   }
 
 }
-
-
-//case class JPGImageExporter(override val filePath: String) extends RGBImageExporter[RGBImage](filePath, "jpg") {
-//
-//}
-
-//case class PNGImageExporter(filePath: String) extends RGBImageExporter[RGBImage](filePath, "png") {
-//
-//}

@@ -8,7 +8,7 @@ import asciiart.image.filters.flip.FlipImageFilter
 import asciiart.image.filters.invert.InvertImageFilter
 import asciiart.image.filters.rotate.RotateImageFilter
 import asciiart.image.filters.scale.ScaleImageFilter
-import asciiart.image.importers.{FileSystemImageImporter, ImageImporter, RandomImageGeneratorImporter}
+import asciiart.image.importers.{FileSystemImageImporter, ImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
 import asciiart.image.models.image.{AsciiImage, RGBImage}
 
 import scala.Right
@@ -55,10 +55,14 @@ class ConsoleParser(private val args: List[String]) {
         command._1 match {
           case "image" =>
             command._2 match {
-              case Some(path) if path.endsWith(".jpg") => Right(FileSystemImageImporter(path))
-              case Some(path) if path.endsWith(".png") => Right(FileSystemImageImporter(path))
-              case Some(path) if path.endsWith(".gif") => Right(FileSystemImageImporter(path))
-              case Some(path) if path.endsWith(".bmp") => Right(FileSystemImageImporter(path))
+//              case Some(path) if path.endsWith(".jpg") => Right(FileSystemImageImporter(path))
+//              case Some(path) if path.endsWith(".png") => Right(FileSystemImageImporter(path))
+//              case Some(path) if path.endsWith(".gif") => Right(FileSystemImageImporter(path))
+//              case Some(path) if path.endsWith(".bmp") => Right(FileSystemImageImporter(path))
+              case Some(path) if path.endsWith(".jpg") => Right(JPGImageImporter(path))
+              case Some(path) if path.endsWith(".png") => Right(JPGImageImporter(path))
+              case Some(path) if path.endsWith(".gif") => Right(JPGImageImporter(path))
+              case Some(path) if path.endsWith(".bmp") => Right(JPGImageImporter(path))
               case Some(_) => Left("Unsupported image format. Please use JPG or PNG or GIF or BMP file.")
               case None => Left("No image path specified.")
             }

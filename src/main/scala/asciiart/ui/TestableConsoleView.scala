@@ -2,7 +2,7 @@ package asciiart.ui
 
 import asciiart.controllers.Controller
 import asciiart.image.convertors.image.ImageConverter
-import asciiart.image.exporters.ImageExporter
+import asciiart.image.exporters.{ImageExporter, RGBImageExporter}
 import asciiart.image.filters.ImageFilter
 import asciiart.image.importers.ImageImporter
 import asciiart.image.models.image.{AsciiImage, RGBImage}
@@ -33,12 +33,28 @@ class TestableConsoleView(
         asciiImageConverter.flatMap(converter => controller.applyConvertor(filteredImage, converter))
       }
 
-      // Export RGB and ASCII images if present
+//      // Export RGB and ASCII images if present
+//      filteredImageOption.foreach { filteredImage =>
+//        imageRGBExporters.foreach(exporter => exporter.exportImage(filteredImage))
+//      }
+//      asciiImageOption.foreach { asciiImage =>
+//        imageAsciiExporters.foreach(exporter => controller.exportImage(asciiImage, exporter))
+//      }
+//
+
       filteredImageOption.foreach { filteredImage =>
-        imageRGBExporters.foreach(exporter => exporter.exportImage(filteredImage))
+        imageRGBExporters.foreach(exporter => {
+          if (exporter.isInstanceOf[RGBImageExporter]) {
+            exporter.exportImage(filteredImage)
+          }
+        })
       }
       asciiImageOption.foreach { asciiImage =>
-        imageAsciiExporters.foreach(exporter => controller.exportImage(asciiImage, exporter))
+        imageAsciiExporters.foreach(exporter => {
+          if (exporter.isInstanceOf[ImageExporter[AsciiImage]]) { // Replace with actual AsciiImage exporter class
+            controller.exportImage(asciiImage, exporter)
+          }
+        })
       }
 
       asciiImageOption

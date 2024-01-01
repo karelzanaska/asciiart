@@ -1,0 +1,32 @@
+{
+  "importers": {
+    "FileSystemImageImporter": "/home/karel/FEL/ZKS/asciiart/samples/cloud.png",
+    "RandomImageGeneratorImporter": {},
+    "GradientRandomImageGeneratorImporter": {}
+  },
+  "converters": {
+    "PatternBasedAsciiImageConverter": {}
+  },
+  "filters": {
+    "FlipImageFilter": {
+      "flipValue": "x"
+    },
+    "InvertImageFilter": {},
+    "RotateImageFilter": {
+      "degrees": 90
+    },
+    "ScaleImageFilter": {
+      "scale": 1
+    }
+  },
+  "exporters": {
+    "StdoutImageExporter": {},
+    "TxtImageExporter": "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.txt"
+  },
+  "rgb_exporters": {
+    "JPGImageExporter": "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.jpg",
+    "PNGImageExporter": "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.png",
+    "BMPImageExporter": "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.bmp",
+    "GIFImageExporter": "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.gif"
+  }
+}
