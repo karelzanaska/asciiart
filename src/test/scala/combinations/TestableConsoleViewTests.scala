@@ -21,14 +21,8 @@ import play.api.libs.json._
 
 
 class ASCIIArtConverterTests extends FlatSpec with Matchers {
-  // Parse the JSON configuration
-//  val configJson: JsValue = Json.parse(Source.fromFile("path/to/config.json").mkString)
-  val configJson: JsValue = Json.parse(Source.fromFile("/home/karel/FEL/ZKS/asciiart/src/test/scala/combinations/testConfig.json").mkString)
 
-  // Function to create an instance of a component
-  def createComponent(className: String, config: JsValue): Any = {
-    // Reflection or other logic to create an instance based on className and config
-  }
+//  val configJson: JsValue = Json.parse(Source.fromFile("/home/karel/FEL/ZKS/asciiart/src/test/scala/combinations/testConfig.json").mkString)
 
 
   def parseCSV(filePath: String): List[(String, String, String, String)] = {
@@ -77,13 +71,9 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
         List(filter)
       )
 
-      // Execute the ASCII art conversion process and capture the result
       val result = view.executeAndCaptureOutput()
 
-      // Assertions about the result
-      // Replace this with appropriate assertions based on your application's expected behavior
       result should not be None
-      // Additional assertions can be added here
     }
   }
 
@@ -172,7 +162,6 @@ class ASCIIArtConverterTests extends FlatSpec with Matchers {
         throw e
     }
   }
-
 
 
   def getDefaultParamValue(tpe: Type): Any = tpe match {

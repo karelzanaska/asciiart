@@ -1,39 +1,3 @@
-//package combinations
-//
-//object TestConfig {
-//  val importers: Map[String, String] = Map(
-//    "FileSystemImageImporter" -> "/home/karel/FEL/ZKS/asciiart/samples/cloud.png",
-//    "RandomImageGeneratorImporter" -> "",
-//    "GradientRandomImageGeneratorImporter" -> ""
-//  )
-//
-//  val converters: Map[String, String] = Map(
-//    "PatternBasedAsciiImageConverter" -> ""
-//  )
-//
-//  val filters: Map[String, Map[String, String]] = Map(
-//    "FlipImageFilter" -> Map("flipValue" -> "x"),
-//    "InvertImageFilter" -> Map(),
-//    "RotateImageFilter" -> Map("degrees" -> "90"),
-//    "ScaleImageFilter" -> Map("scale" -> "1")
-//  )
-//
-//  val exporters: Map[String, String] = Map(
-//    "StdoutImageExporter" -> "",
-//    "TxtImageExporter" -> "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.txt"
-//  )
-//
-//  val rgbExporters: Map[String, String] = Map(
-//    "JPGImageExporter" -> "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.jpg",
-//    "PNGImageExporter" -> "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.png",
-//    "BMPImageExporter" -> "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.bmp",
-//    "GIFImageExporter" -> "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.gif"
-//  )
-//}
-//
-//
-//
-
 package combinations
 
 

@@ -33,14 +33,6 @@ class TestableConsoleView(
         asciiImageConverter.flatMap(converter => controller.applyConvertor(filteredImage, converter))
       }
 
-//      // Export RGB and ASCII images if present
-//      filteredImageOption.foreach { filteredImage =>
-//        imageRGBExporters.foreach(exporter => exporter.exportImage(filteredImage))
-//      }
-//      asciiImageOption.foreach { asciiImage =>
-//        imageAsciiExporters.foreach(exporter => controller.exportImage(asciiImage, exporter))
-//      }
-//
 
       filteredImageOption.foreach { filteredImage =>
         imageRGBExporters.foreach(exporter => {
@@ -51,7 +43,7 @@ class TestableConsoleView(
       }
       asciiImageOption.foreach { asciiImage =>
         imageAsciiExporters.foreach(exporter => {
-          if (exporter.isInstanceOf[ImageExporter[AsciiImage]]) { // Replace with actual AsciiImage exporter class
+          if (exporter.isInstanceOf[ImageExporter[AsciiImage]]) {
             controller.exportImage(asciiImage, exporter)
           }
         })

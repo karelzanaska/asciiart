@@ -122,26 +122,6 @@ class ConsoleParser(private val args: List[String]) {
       }
     })
 
-//    val outputFile = parsedArgs.find(_._1 == "output-rgb-file")
-//    if (outputFile.isDefined) {
-//      val path = outputFile.get._2.get
-//      if (path.endsWith(".jpg")) {
-//        imageExporters += JPGImageExporter(path)
-//      }
-//      else if (path.endsWith(".png")) {
-//        imageExporters += PNGImageExporter(path)
-//      }
-//      else if (path.endsWith(".gif")) {
-//        imageExporters += GIFImageExporter(path)
-//      }
-//      else if (path.endsWith(".bmp")) {
-//        imageExporters += BMPImageExporter(path)
-//      }
-//      else {
-//        return Left("Unsupported output file format. Please use JPG or PNG or GIF or BMP file.")
-//      }
-//    }
-
     Right(imageExporters.toList)
   }
 
