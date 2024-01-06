@@ -24,16 +24,10 @@ object TestConfig {
     "asciiart.image.convertors.image.PatternBasedAsciiImageConverter" -> NullValue(),
   )
 
-//  val filters: Map[String, Map[String, ConfigValue]] = Map(
   val filters: Map[String, ConfigValue] = Map(
-//    "asciiart.image.filters.flip.FlipImageFilter" -> Map("flipValue" -> "x"),
     "asciiart.image.filters.flip.FlipImageFilter" -> CharValue('x'),
-//    "asciiart.image.filters.invert.InvertImageFilter" -> Map(),
     "asciiart.image.filters.invert.InvertImageFilter" -> NullValue(),
-//    "asciiart.image.filters.invert.InvertImageFilter" -> Map(),
-//    "asciiart.image.filters.rotate.RotateImageFilter" -> Map("degrees" -> "90"),
     "asciiart.image.filters.rotate.RotateImageFilter" -> IntValue(90),
-//    "asciiart.image.filters.scale.ScaleImageFilter" -> Map("scale" -> "1")
     "asciiart.image.filters.scale.ScaleImageFilter" -> FloatValue(1)
   )
 

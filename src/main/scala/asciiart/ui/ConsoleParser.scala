@@ -8,7 +8,7 @@ import asciiart.image.filters.flip.FlipImageFilter
 import asciiart.image.filters.invert.InvertImageFilter
 import asciiart.image.filters.rotate.RotateImageFilter
 import asciiart.image.filters.scale.ScaleImageFilter
-import asciiart.image.importers.{FileSystemImageImporter, ImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
+import asciiart.image.importers.{FileSystemImageImporter, GradientRandomImageGeneratorImporter, ImageImporter, JPGImageImporter, RandomImageGeneratorImporter}
 import asciiart.image.models.image.{AsciiImage, RGBImage}
 
 import scala.Right
@@ -67,7 +67,7 @@ class ConsoleParser(private val args: List[String]) {
               case None => Left("No image path specified.")
             }
           case "image-random" => Right(RandomImageGeneratorImporter())
-          case "image-random-gradient" => Right(RandomImageGeneratorImporter())
+          case "image-random-gradient" => Right(GradientRandomImageGeneratorImporter())
           case _ => Left("Invalid image command.")
         }
     )
