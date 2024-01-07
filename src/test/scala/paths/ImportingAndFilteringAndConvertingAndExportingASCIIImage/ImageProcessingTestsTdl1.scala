@@ -15,6 +15,9 @@ import java.nio.file.{Files, Paths}
 
 
 class ImageProcessingTestsTdl1 extends FunSuite {
+  val baseSamplePath = "samples/"
+  val baseOutputPath = baseSamplePath + "artifacts/"
+
 
   test("TDL=1; path: 4") {
     val controller = new ConsoleController()
@@ -24,138 +27,140 @@ class ImageProcessingTestsTdl1 extends FunSuite {
 
   test("TDL=1; path: 1 - 2 - 5 - 11") {
     val controller = new ConsoleController()
-    val args = List("--image", "/path/to/nonexistent.png")
+    val args = List("--image", baseSamplePath + "cloud2.png")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val expectedErrorMessage = "Unable to load image with provided path: '/path/to/nonexistent.png'"
+    val expectedErrorMessage = "Unable to load image with provided path: '" + baseSamplePath + "cloud2.png'"
     assert(controller.getLastErrorMessage.contains(expectedErrorMessage))
   }
 
   test("TDL=1; path: 1 - 2 - 6 - 12") {
     val controller = new ConsoleController()
-    val args = List("--image", "/path/to/nonexistent.jpg")
+    val args = List("--image", baseSamplePath + "cloud2.jpg")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val expectedErrorMessage = "Unable to load image with provided path: '/path/to/nonexistent.jpg'"
+    val expectedErrorMessage = "Unable to load image with provided path: '" + baseSamplePath + "cloud2.jpg'"
     assert(controller.getLastErrorMessage.contains(expectedErrorMessage))
   }
 
   test("TDL=1; path: 1 - 2 - 7 - 13") {
     val controller = new ConsoleController()
-    val args = List("--image", "/path/to/nonexistent.gif")
+    val args = List("--image", baseSamplePath + "cloud2.gif")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val expectedErrorMessage = "Unable to load image with provided path: '/path/to/nonexistent.gif'"
+    val expectedErrorMessage = "Unable to load image with provided path: '" + baseSamplePath + "cloud2.gif'"
     assert(controller.getLastErrorMessage.contains(expectedErrorMessage))
   }
 
   test("TDL=1; path: 1 - 2 - 8 - 14") {
     val controller = new ConsoleController()
-    val args = List("--image", "/path/to/nonexistent.bmp")
+    val args = List("--image", baseSamplePath + "cloud2.bmp")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val expectedErrorMessage = "Unable to load image with provided path: '/path/to/nonexistent.bmp'"
+    val expectedErrorMessage = "Unable to load image with provided path: '" + baseSamplePath + "cloud2.bmp'"
     assert(controller.getLastErrorMessage.contains(expectedErrorMessage))
   }
 
   test("TDL=1; path: 1 - 2 - 5 - 21 - 17 - 25 - 29 - 18 - 26 - 31 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--flip", "x", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.jpg")
+    val args = List("--image", baseSamplePath + "cloud.png", "--flip", "x", "--output-file", baseOutputPath + "output-cloud.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-cloud.jpg")
+    val outputPath = Paths.get(baseOutputPath + "output-cloud.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 2 - 6 - 22 - 20 - 28 - 29 - 30 - 27 - 31 - 39 - 47 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.jpg", "--invert", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.gif")
+    val args = List("--image", baseSamplePath + "cloud.jpg", "--invert", "--output-file", baseOutputPath + "output-cloud.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-cloud.gif")
+    val outputPath = Paths.get(baseOutputPath + "output-cloud.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 2 - 7 - 23 - 17 - 25 - 29 - 30 - 27 - 31 - 38 - 40 - 42 - 45 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.gif", "--rotate", "90", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.png")
+    val args = List("--image", baseSamplePath + "cloud.gif", "--rotate", "90", "--output-file", baseOutputPath + "output-cloud.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-cloud.png")
+    val outputPath = Paths.get(baseOutputPath + "output-cloud.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 2 - 8 - 24 - 17 - 25 - 29 - 30 - 27 - 31 - 38 - 40 - 43 - 46 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.bmp", "--scale", "4", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.bmp")
+    val args = List("--image", baseSamplePath + "cloud.bmp", "--scale", "4", "--output-file", baseOutputPath + "output-cloud.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-cloud.bmp")
+    val outputPath = Paths.get(baseOutputPath + "output-cloud.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 3 - 9 - 15 - 17 - 25 - 29 - 30 - 27 - 31 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image-random", "--flip", "x", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-random.jpg")
+    val args = List("--image-random", "--flip", "x", "--output-file", baseOutputPath + "output-random.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-random.jpg")
+    val outputPath = Paths.get(baseOutputPath + "output-random.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 3 - 10 - 16 - 17 - 25 - 29 - 30 - 27 - 31 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image-random-gradient", "--invert", "--output-rgb-file", "/home/karel/FEL/ZKS/asciiart/samples/output-random-gradient.gif")
+    val args = List("--image-random-gradient", "--invert", "--output-file", baseOutputPath + "output-random-gradient.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-random-gradient.gif")
+    val outputPath = Paths.get(baseOutputPath + "output-random-gradient.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
 
   test("TDL=1; path: 1 - 2 - 5 - 32 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-console")
+    val args = List("--image", baseSamplePath + "cloud.png", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 2 - 6 - 33 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.jpg", "--output-console")
+    val args = List("--image", baseSamplePath + "cloud.jpg", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 2 - 7 - 34 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.gif", "--output-console")
+    val args = List("--image", baseSamplePath + "cloud.gif", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 2 - 8 - 35 - 38 - 40 - 41 - 44 - 48 - 49") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.bmp", "--output-console")
+    val args = List("--image", baseSamplePath + "cloud.bmp", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
-
-//    assert(controller.getLastMessage().contains("ASCII Art Output"))
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 3 - 9 - 36 - 38 - 40 - 41 - 44 - 48 - 49") {
@@ -163,7 +168,7 @@ class ImageProcessingTestsTdl1 extends FunSuite {
     val args = List("--image-random", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
-
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 3 - 10 - 37 - 38 - 40 - 41 - 44 - 48 - 49") {
@@ -171,17 +176,19 @@ class ImageProcessingTestsTdl1 extends FunSuite {
     val args = List("--image-random-gradient", "--output-console")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
-
+    // Assertions can be added here based on the expected console output
   }
 
   test("TDL=1; path: 1 - 2 - 5 - 32 - 39 - 47 - 48 - 50") {
     val controller = new ConsoleController()
-    val args = List("--image", "/home/karel/FEL/ZKS/asciiart/samples/cloud.png", "--output-file", "/home/karel/FEL/ZKS/asciiart/samples/output-cloud.txt")
+    val args = List("--image", baseSamplePath + "cloud.png", "--output-file", baseOutputPath + "output-cloud.txt")
     val consoleView = new ConsoleView(controller, args)
     consoleView.run()
 
-    val outputPath = Paths.get("/home/karel/FEL/ZKS/asciiart/samples/output-cloud.txt")
+    val outputPath = Paths.get(baseOutputPath + "output-cloud.txt")
     assert(Files.exists(outputPath))
     Files.deleteIfExists(outputPath)
   }
+
+
 }
